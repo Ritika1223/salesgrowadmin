@@ -1,0 +1,25 @@
+/*
+  PROJECT THEME
+  Same palette as the login screen: dark navy pages, cyan and gold accents.
+  Change colors here only.
+  Reference: https://learnpro.teenminar.com/app/dashboard.php
+*/
+:root {
+  --color-bg: #03060f;
+  --color-bg-soft: #071422;
+  --color-surface: #0b1e30;
+  --color-pale: #0e2a3c;
+  --color-line: rgba(80, 230, 255, 0.35);
+  --color-ink: #f4fbff;
+  --color-text: #f4fbff;
+  --color-muted: #8ea4b8;
+  --color-primary: #13b8d8;
+  --color-primary-dark: #0e8f9a;
+  --color-accent: #19e0c4;
+  --color-peri: #3ee0ff;
+  --color-nav: #031020;
+  --color-success: #19e0c4;
+  --color-warning: #ffe08a;
+  --color-danger: #ff5c7a;
+  --color-gradient: linear-gradient(90deg, #0e8f9a 0%, #19e0c4 55%, #13b8d8 100%);
+}

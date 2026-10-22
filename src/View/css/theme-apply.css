@@ -1,0 +1,686 @@
+/*
+  Applies theme.css on top of older styles.
+  Do not put raw brand colors here. Change them in theme.css.
+*/
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
+
+body,
+#root,
+.app,
+.app > main {
+  background: var(--color-bg) !important;
+  color: var(--color-text) !important;
+  font-family: Inter, "Segoe UI", system-ui, sans-serif;
+}
+
+aside.sidebar {
+  background: var(--color-surface) !important;
+  border-right: 1px solid var(--color-line) !important;
+  width: 270px !important;
+  box-shadow: none !important;
+}
+
+.brand {
+  background: var(--color-gradient);
+  border-radius: 16px;
+  padding: 10px 12px;
+}
+
+.brand img,
+.cp-mobile-sidebar-topbar img {
+  width: 160px;
+  max-width: 100%;
+  height: auto;
+  margin: 0;
+  background: transparent;
+  object-fit: contain;
+}
+
+.nav a {
+  color: var(--color-text) !important;
+  border-radius: 12px !important;
+}
+
+.nav a:hover {
+  background: var(--color-bg-soft) !important;
+  color: var(--color-accent) !important;
+}
+
+.nav a .ico,
+.bottom-nav .nav-btn .ico {
+  color: var(--color-primary) !important;
+  background: var(--color-pale) !important;
+  border-color: transparent !important;
+}
+
+.nav a.active {
+  background: var(--color-pale) !important;
+  color: var(--color-accent) !important;
+  border-color: transparent !important;
+  box-shadow: none !important;
+}
+
+.nav a.active .ico {
+  background: var(--color-gradient) !important;
+  color: var(--color-ink) !important;
+}
+
+.nav-group-label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 12px;
+  color: var(--color-ink);
+  font-weight: 700;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  text-align: left;
+}
+
+.nav-group-label .bi-chevron-up,
+.nav-group-label .bi-chevron-down {
+  margin-left: auto;
+  background: transparent !important;
+  color: var(--color-ink) !important;
+}
+
+.nav-group.open > .nav-group-label {
+  background: var(--color-pale) !important;
+  color: var(--color-accent) !important;
+  border-radius: 12px;
+}
+
+.nav-group.open > .nav-group-label .ico {
+  background: var(--color-gradient) !important;
+  color: var(--color-ink) !important;
+}
+
+.nav-group-label .ico {
+  color: var(--color-primary);
+  background: var(--color-pale);
+  border-radius: 10px;
+  width: 34px;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.nav-group-links {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-left: 16px;
+}
+
+.fund-request-form {
+  max-width: 560px;
+}
+
+.fund-request-form .wallet-input,
+.fund-request-form label,
+.fund-request-form p {
+  color: var(--color-ink) !important;
+}
+
+.fund-request-layout {
+  display: grid;
+  grid-template-columns: minmax(220px, 320px) 1fr;
+  gap: 28px;
+  align-items: start;
+  max-width: none;
+}
+
+.fund-request-qr {
+  text-align: center;
+}
+
+.fund-request-qr .payment-qr {
+  width: 220px;
+  max-width: 100%;
+  height: auto;
+  background: #fff;
+  border-radius: 16px;
+}
+
+.fund-request-layout .wallet-input,
+.fund-request-layout label,
+.fund-request-layout p,
+.fund-request-layout span {
+  color: var(--color-ink) !important;
+}
+
+@media (max-width: 800px) {
+  .fund-request-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.bottom-nav,
+.bottom-nav .bar {
+  background: var(--color-nav) !important;
+}
+
+.bottom-nav .nav-btn {
+  color: var(--color-peri) !important;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.bottom-nav .nav-btn .ico {
+  background: transparent !important;
+  color: var(--color-peri) !important;
+  border-color: transparent !important;
+}
+
+.bottom-nav .nav-btn.active,
+.bottom-nav .nav-btn.active .ico {
+  color: #fff !important;
+  background: transparent !important;
+}
+
+.app > main,
+.app > main h1,
+.app > main h2,
+.app > main h3,
+.app > main h4,
+.app > main h5,
+.app > main p,
+.app > main span,
+.app > main label,
+.app > main li,
+.app > main td,
+.app > main th,
+.app > main strong,
+.app > main small,
+.app > main a {
+  color: var(--color-ink) !important;
+}
+
+.app > main .prox-live-navbar-subtitle,
+.app > main .muted,
+.app > main small {
+  color: var(--color-muted) !important;
+}
+
+.app > main,
+.app > main .cpx-ultra-dashboard,
+.app > main .wallet-page,
+.app > main .refx-page,
+.app > main .income-history-page,
+.app > main .modern-plans-page,
+.app > main .plans-page,
+.app > main .chatprox-profile-page {
+  background: var(--color-bg) !important;
+}
+
+.app > main .cpx-premium-card,
+.app > main .cpx-pool-card,
+.app > main .cpx-ultra-hero,
+.app > main .income-history-card,
+.app > main .wallet-main-card,
+.app > main .modern-plan-card,
+.app > main .neo-card,
+.app > main .stat,
+.app > main .stat-green,
+.app > main .stat-blue,
+.app > main .stat-purple,
+.app > main .stat-orange,
+.app > main .stat-pink,
+.app > main .stat-brown,
+.app > main .stat-cyan,
+.app > main .stat-red,
+.app > main .refx-stat-box,
+.app > main .refx-main-card,
+.app > main .refx-step-box,
+.app > main .refx-history-item,
+.app > main .info-card,
+.app > main .champion-card,
+.app > main .rank-item,
+.app > main .income-history-table,
+.wallet-modal-box,
+.cpx-coin-inner {
+  background: var(--color-surface) !important;
+  border: 1px solid var(--color-line) !important;
+  border-radius: 20px !important;
+  box-shadow: 0 8px 24px rgba(14, 143, 154, 0.28) !important;
+  color: var(--color-ink) !important;
+}
+
+.cpx-ultra-glow,
+.wallet-card-glow,
+.neo-card-bg {
+  opacity: 0.35;
+}
+
+.cpx-ultra-glow.one,
+.wallet-card-glow.one {
+  background: var(--color-peri) !important;
+}
+
+.cpx-ultra-glow.two,
+.wallet-card-glow.two,
+.neo-card-bg.purple {
+  background: var(--color-primary) !important;
+}
+
+.app > main .prox-live-gradient-btn,
+.app > main .prox-live-gradient-btn i,
+.app > main .cpx-main-btn,
+.app > main .neo-btn,
+.app > main .wallet-add-btn,
+.app > main .cp-save-btn,
+.app > main .cp-upload-btn,
+.app > main .refx-copy-action,
+.app > main .refx-dashboard-btn,
+.app > main .income-pagination button.active,
+.app > main .btn,
+.app > main .modern-buy-btn,
+.app > main .modern-buy-btn i,
+.app > main .modern-buy-btn span,
+.app > main .wallet-submit-btn,
+.app > main .dashboard-btn {
+  background: var(--color-gradient) !important;
+  color: var(--color-ink) !important;
+  border: 0 !important;
+  border-radius: 999px !important;
+  box-shadow: 0 8px 24px rgba(14, 143, 154, 0.35) !important;
+}
+
+.app > main .prox-live-outline-btn {
+  background: var(--color-surface) !important;
+  color: var(--color-accent) !important;
+  border: 1px solid var(--color-line) !important;
+  border-radius: 999px !important;
+}
+
+.app > main table,
+.app > main .income-history-table {
+  background: var(--color-surface) !important;
+  color: var(--color-ink) !important;
+}
+
+.app > main input,
+.app > main select,
+.app > main textarea,
+.sg-auth input,
+.sg-auth textarea,
+.sg-auth select {
+  background: var(--color-bg-soft) !important;
+  color: var(--color-ink) !important;
+  -webkit-text-fill-color: var(--color-ink) !important;
+  caret-color: var(--color-ink);
+  border: 1px solid var(--color-line) !important;
+  border-radius: 12px !important;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus,
+select:-webkit-autofill {
+  -webkit-text-fill-color: var(--color-ink) !important;
+  caret-color: var(--color-ink);
+  color: var(--color-ink) !important;
+  box-shadow: 0 0 0 1000px var(--color-bg-soft) inset !important;
+  -webkit-box-shadow: 0 0 0 1000px var(--color-bg-soft) inset !important;
+  transition: background-color 9999s ease-out 0s;
+}
+
+/* Sign in / sign up — same split layout as LearnPro Hub */
+.sg-auth {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: Inter, "Segoe UI", system-ui, sans-serif;
+}
+
+.sg-auth-panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 48px;
+  color: #fff;
+  background: var(--color-gradient);
+  position: relative;
+  overflow: hidden;
+}
+
+.sg-auth-panel::after {
+  content: "";
+  position: absolute;
+  right: -120px;
+  bottom: -140px;
+  width: 380px;
+  height: 380px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.sg-auth-panel img {
+  width: 190px;
+  height: auto;
+  margin-bottom: 28px;
+  background: transparent;
+  position: relative;
+  z-index: 1;
+}
+
+.sg-auth-panel h1,
+.sg-auth-panel p {
+  position: relative;
+  z-index: 1;
+  color: #fff;
+}
+
+.sg-auth-panel h1 {
+  margin: 0 0 12px;
+  font-size: 36px;
+  letter-spacing: -0.02em;
+}
+
+.sg-auth-panel p {
+  margin: 0;
+  max-width: 420px;
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.sg-auth-main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px 20px;
+  background: var(--color-bg);
+}
+
+.sg-auth-card {
+  width: min(420px, 100%);
+  background: var(--color-surface);
+  border-radius: 20px;
+  box-shadow: 0 8px 24px rgba(14, 143, 154, 0.28);
+  padding: 28px 24px;
+}
+
+.sg-auth-card h2 {
+  margin: 0 0 4px;
+  color: var(--color-ink);
+  font-size: 26px;
+}
+
+.sg-auth-card .sg-lead {
+  margin: 0 0 20px;
+  color: var(--color-muted);
+  font-size: 14px;
+}
+
+.sg-auth .app-form-group {
+  margin-bottom: 14px;
+}
+
+.sg-auth .app-form-group label {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--color-ink);
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.sg-ref-check {
+  margin: -2px 0 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-muted);
+}
+
+.sg-ref-ok {
+  color: #15803d;
+}
+
+.sg-ref-bad {
+  color: #b91c1c;
+}
+
+.sg-auth .app-input-box {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--color-bg-soft);
+  border: 1px solid var(--color-line);
+  border-radius: 12px;
+  padding: 0 12px;
+}
+
+.sg-auth .app-input-box input {
+  flex: 1;
+  height: 48px;
+  border: 0 !important;
+  outline: 0;
+  background: var(--color-bg-soft) !important;
+  color: var(--color-ink) !important;
+  -webkit-text-fill-color: var(--color-ink) !important;
+  caret-color: var(--color-ink);
+  box-shadow: none !important;
+}
+
+.sg-auth input:-webkit-autofill,
+.sg-auth input:-webkit-autofill:hover,
+.sg-auth input:-webkit-autofill:focus {
+  -webkit-text-fill-color: var(--color-ink) !important;
+  color: var(--color-ink) !important;
+  box-shadow: 0 0 0 1000px var(--color-bg-soft) inset !important;
+  -webkit-box-shadow: 0 0 0 1000px var(--color-bg-soft) inset !important;
+}
+
+.sg-auth .input-icon,
+.sg-auth .app-password-toggle {
+  color: var(--color-primary);
+  background: transparent;
+  border: 0;
+}
+
+.sg-auth .app-login-btn,
+.sg-auth .app-register-btn {
+  width: 100%;
+  height: 50px;
+  margin-top: 8px;
+  border: 0;
+  border-radius: 999px;
+  background: var(--color-gradient) !important;
+  color: var(--color-ink) !important;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 8px 24px rgba(14, 143, 154, 0.35);
+}
+
+.sg-auth .signup-text,
+.sg-auth .app-login-options {
+  margin-top: 16px;
+  color: var(--color-muted);
+}
+
+.sg-auth .signup-text a,
+.sg-auth .app-login-options a {
+  color: var(--color-primary);
+  font-weight: 700;
+}
+
+.sg-auth-signup {
+  grid-template-columns: 1.15fr 0.85fr;
+}
+
+.sg-auth-signup .sg-auth-panel {
+  order: 2;
+}
+
+@media (max-width: 860px) {
+  .sg-auth,
+  .sg-auth-signup {
+    grid-template-columns: 1fr;
+  }
+
+  .sg-auth-panel {
+    padding: 28px 20px;
+  }
+
+  .sg-auth-signup .sg-auth-panel {
+    order: 0;
+  }
+}
+
+/* Admin main content uses the same surfaces as the user pages */
+.app > main .admin-dashboard-section,
+.app > main .admin-users-page {
+  background: transparent !important;
+  color: var(--color-ink) !important;
+}
+
+.app > main .users-header-card,
+.app > main .stats-card,
+.app > main .users-table-card,
+.app > main .dashboard-header {
+  background: var(--color-surface) !important;
+  border: 1px solid var(--color-line) !important;
+  color: var(--color-ink) !important;
+  box-shadow: 0 8px 24px rgba(14, 143, 154, 0.28) !important;
+}
+
+.app > main .users-header-card h2,
+.app > main .users-header-card p,
+.app > main .stats-card h2,
+.app > main .stats-card h6,
+.app > main .dashboard-header h3,
+.app > main .dashboard-header p,
+.app > main .premium-table td,
+.app > main .premium-table th,
+.app > main .premium-table,
+.app > main .search-input,
+.app > main .search-wrapper i {
+  color: var(--color-ink) !important;
+}
+
+.app > main .stats-card h2 {
+  color: var(--color-primary) !important;
+}
+
+.app > main .header-icon {
+  background: var(--color-gradient) !important;
+}
+
+.app > main .header-icon i {
+  color: var(--color-ink) !important;
+}
+
+.app > main .search-input {
+  background: var(--color-bg-soft) !important;
+  border: 1px solid var(--color-line) !important;
+}
+
+.app > main .search-input::placeholder {
+  color: var(--color-muted) !important;
+}
+
+.app > main .premium-table tbody tr {
+  background: var(--color-surface) !important;
+}
+
+.app > main .premium-table td {
+  border-bottom: 1px solid var(--color-line) !important;
+}
+
+.app > main .premium-table thead tr {
+  background: var(--color-pale) !important;
+}
+
+.app > main .premium-table thead th {
+  color: var(--color-ink) !important;
+}
+
+.app > main .dashboard-btn,
+.app > main .admin-lab-btn {
+  background: var(--color-gradient) !important;
+  color: var(--color-ink) !important;
+  border: 0 !important;
+  border-radius: 999px !important;
+}
+
+/* White cards: dark text. Dark theme panels: white text. */
+.app > main .profile-sidebar,
+.app > main .profile-content,
+.app > main .activity-section,
+.app > main .info-card,
+.app > main .stat-box,
+.app > main .profile-status,
+.cp-edit-modal,
+.crop-modal {
+  background: var(--color-surface) !important;
+  border: 1px solid var(--color-line) !important;
+  color: var(--color-ink) !important;
+  box-shadow: 0 8px 24px rgba(14, 143, 154, 0.28) !important;
+}
+
+.app > main .info-card label,
+.app > main .info-card h4,
+.app > main .profile-sidebar h2,
+.app > main .profile-sidebar p,
+.app > main .profile-status,
+.cp-edit-modal,
+.cp-edit-modal h2,
+.cp-edit-modal label,
+.cp-edit-modal small,
+.cp-edit-modal p,
+.crop-modal,
+.crop-modal button {
+  color: var(--color-ink) !important;
+}
+
+.cp-edit-modal input,
+.cp-edit-modal select,
+.cp-edit-modal textarea,
+.cp-edit-modal option,
+.app > main select,
+.app > main select option,
+.app > main input,
+.app > main textarea {
+  background: var(--color-bg-soft) !important;
+  color: var(--color-ink) !important;
+  -webkit-text-fill-color: var(--color-ink) !important;
+}
+
+.cp-edit-close {
+  background: var(--color-pale) !important;
+  color: var(--color-ink) !important;
+}
+
+/* Gradient and dark bars keep light text */
+.bottom-nav,
+.bottom-nav .nav-btn,
+.bottom-nav .nav-btn .ico,
+.sg-auth-panel,
+.sg-auth-panel h1,
+.sg-auth-panel h2,
+.sg-auth-panel p,
+.nav a.active .ico,
+.header-icon i {
+  color: #fff !important;
+}
+
+.app > main .prox-live-gradient-btn,
+.app > main .wallet-submit-btn,
+.app > main .modern-buy-btn,
+.app > main .cp-upload-btn,
+.app > main .dashboard-btn,
+.cp-upload-btn {
+  color: var(--color-ink) !important;
+}
