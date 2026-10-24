@@ -21,17 +21,59 @@ aside.sidebar {
 }
 
 .brand {
-  background: var(--color-gradient);
-  border-radius: 16px;
-  padding: 10px 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: transparent;
+  border-radius: 0;
+  padding: 8px 0 16px;
+}
+
+.kk-wordmark {
+  width: 132px;
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 0 auto;
+  background: transparent !important;
+  mix-blend-mode: screen;
+}
+
+.sidebar.mobile .brand {
+  display: none !important;
+}
+
+.cp-mobile-sidebar-topbar {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 8px;
+  min-height: 58px;
+  padding: 8px 12px !important;
+  background: transparent !important;
+  border-bottom: 0 !important;
+}
+
+.cp-mobile-sidebar-close {
+  position: static !important;
+  margin: 0 !important;
+  width: 32px;
+  height: 32px;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  background: transparent !important;
+  color: var(--color-text) !important;
+  border: 1px solid var(--color-line) !important;
+  border-radius: 50%;
 }
 
 .brand img,
 .cp-mobile-sidebar-topbar img {
-  width: 160px;
+  width: 132px;
   max-width: 100%;
   height: auto;
-  margin: 0;
+  margin: 0 auto;
   background: transparent;
   object-fit: contain;
 }
@@ -683,4 +725,67 @@ select:-webkit-autofill {
 .app > main .dashboard-btn,
 .cp-upload-btn {
   color: var(--color-ink) !important;
+}
+
+.admin-login-page {
+  background: var(--color-bg) !important;
+}
+
+.admin-login-card {
+  background: var(--color-surface) !important;
+  border: 2px solid var(--color-line) !important;
+  box-shadow: 0 8px 24px rgba(14, 143, 154, 0.28) !important;
+}
+
+.admin-login-logo {
+  width: 140px;
+  height: auto;
+  display: block;
+  margin: 0 auto 18px;
+  mix-blend-mode: screen;
+}
+
+.admin-login-top h2,
+.admin-login-top p,
+.admin-login-group label,
+.admin-login-footer p {
+  color: var(--color-text) !important;
+}
+
+.admin-login-top p,
+.admin-login-footer p {
+  color: var(--color-muted) !important;
+}
+
+.admin-login-input {
+  background: var(--color-bg-soft) !important;
+  border: 2px solid var(--color-line) !important;
+}
+
+.admin-login-input:focus-within {
+  border-color: var(--color-primary) !important;
+  box-shadow: 0 0 0 4px rgba(19, 184, 216, 0.18) !important;
+}
+
+.admin-login-input i,
+.admin-login-input input {
+  color: var(--color-text) !important;
+}
+
+.admin-login-input input::placeholder {
+  color: var(--color-muted) !important;
+}
+
+.admin-login-btn {
+  background: var(--color-gradient) !important;
+  color: var(--color-ink) !important;
+  box-shadow: 0 8px 24px rgba(14, 143, 154, 0.35) !important;
+}
+
+.admin-login-footer a {
+  color: var(--color-accent) !important;
+}
+
+.admin-login-footer a:hover {
+  color: var(--color-primary) !important;
 }

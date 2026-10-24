@@ -68,9 +68,7 @@ const [showPassword, setShowPassword] = useState(false);
     {/* TOP LOGO */}
     <div className="admin-login-top">
 
-      <div className="admin-login-icon">
-        <i className="bi bi-shield-lock-fill"></i>
-      </div>
+      <img className="admin-login-logo" src="/images/logo2.png" alt="KaKowa" />
 
       <h2>
         Admin Login
