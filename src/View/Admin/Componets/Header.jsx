@@ -51,6 +51,18 @@ const NAV_LINKS = [
   },
 
   {
+    icon: <i className="bi bi-graph-up-arrow"></i>,
+    label: "Income",
+    children: [
+      {
+        to: "admin/income/roi-to-roi",
+        icon: <i className="bi bi-arrow-repeat"></i>,
+        label: "ROI to ROI Income",
+      },
+    ],
+  },
+
+  {
     icon: <i className="bi bi-cash-stack"></i>,
     label: "Withdrawal",
     children: [
@@ -114,6 +126,7 @@ export default function Header() {
     const open = {};
     if (path.startsWith("/admin/fund")) open.Fund = true;
     if (path.startsWith("/admin/withdraw")) open.Withdrawal = true;
+    if (path.startsWith("/admin/income")) open.Income = true;
     return open;
   });
   const hrefFor = (to) => (to.startsWith("/") ? to : `/${to}`);
@@ -184,24 +197,17 @@ export default function Header() {
           data-open={isMobile ? (sidebarOpen ? "true" : "false") : undefined}
         >
           {isMobile && (
-            <div
-              className="cp-mobile-sidebar-topbar"
-            >
-              <img className="kk-wordmark" src="/images/logo2.png" alt="KaKowa" />
+            <div className="cp-mobile-sidebar-topbar">
               <button
+                type="button"
                 aria-label="Close menu"
                 onClick={() => setSidebarOpen(false)}
                 className="cp-mobile-sidebar-close"
-              >✕</button>
+              >
+                <i className="bi bi-x-lg"></i>
+              </button>
             </div>
           )}
-          {/* <div className="brand">
-            <img src="/images/salesgrow.png" alt="SalesGrow" />
-          </div> */}
-          <div className="brand">
-            <img className="kk-wordmark" src="/images/logo2.png" alt="KaKowa" />
-          </div>
-     
           <nav className="nav">
             {renderNavLinks()}
           </nav>

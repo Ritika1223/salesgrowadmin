@@ -177,18 +177,22 @@ export default function AdminFundRequests({ reportOnly = false }) {
                                   <button
                                     className="approve-btn"
                                     title="Approve"
+                                    aria-label="Approve"
                                     disabled={actionLoading === r._id + "approved"}
                                     onClick={() => handleStatusUpdate(r._id, "approved")}
                                   >
-                                    Approve
+                                    <i className="bi bi-check-lg"></i>
+                                    <span className="action-label">Approve</span>
                                   </button>
                                   <button
                                     className="decline-btn"
                                     title="Reject"
+                                    aria-label="Reject"
                                     disabled={actionLoading === r._id + "rejected"}
                                     onClick={() => handleStatusUpdate(r._id, "rejected")}
                                   >
-                                    Reject
+                                    <i className="bi bi-x-lg"></i>
+                                    <span className="action-label">Reject</span>
                                   </button>
                                 </>
                               )}

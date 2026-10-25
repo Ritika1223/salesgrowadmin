@@ -789,3 +789,79 @@ select:-webkit-autofill {
 .admin-login-footer a:hover {
   color: var(--color-primary) !important;
 }
+
+.brand,
+.kk-wordmark {
+  display: none !important;
+}
+
+.action-buttons .approve-btn,
+.action-buttons .decline-btn {
+  width: auto !important;
+  min-width: 92px;
+  height: 36px !important;
+  padding: 0 12px !important;
+  border: 0 !important;
+  border-radius: 10px !important;
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  font-size: 13px !important;
+  font-weight: 700;
+  color: #fff !important;
+  white-space: nowrap;
+}
+
+.action-buttons .approve-btn {
+  background: #12b886 !important;
+}
+
+.action-buttons .decline-btn {
+  background: #e03131 !important;
+}
+
+@media (max-width: 768px) {
+  .sidebar-toggle {
+    display: inline-flex !important;
+    top: 10px;
+    right: 10px;
+    left: auto;
+    width: 30px;
+    height: 30px;
+    font-size: 15px;
+    z-index: 120;
+  }
+
+  .sidebar-toggle.is-hidden {
+    display: none !important;
+  }
+
+  .cp-mobile-sidebar-topbar {
+    justify-content: flex-end !important;
+    min-height: 44px;
+    padding: 8px 10px !important;
+  }
+
+  .cp-mobile-sidebar-close {
+    position: static !important;
+    right: auto !important;
+    width: 28px !important;
+    height: 28px !important;
+    font-size: 14px !important;
+    margin-left: auto !important;
+  }
+
+  .action-buttons .action-label {
+    display: none;
+  }
+
+  .action-buttons .approve-btn,
+  .action-buttons .decline-btn {
+    width: 32px !important;
+    min-width: 32px;
+    height: 32px !important;
+    padding: 0 !important;
+    font-size: 16px !important;
+  }
+}
