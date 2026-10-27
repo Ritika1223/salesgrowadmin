@@ -15,6 +15,7 @@ import PlanRequests from "./Pages/PlanRequests";
 import AdminFundRequests from "./Pages/AdminFundRequests";
 import AdminWithdrawals from "./Pages/AdminWithdrawals";
 import AdminRoiToRoiIncome from "./Pages/AdminRoiToRoiIncome";
+import AdminUserControl from "./Pages/AdminUserControl";
 
 function AdminGuard({ children }) {
   if (!isAdminLoggedIn()) {
@@ -53,6 +54,8 @@ const Routes = [
       { path: "withdraw/requests", element: <AdminWithdrawals /> },
       { path: "withdraw/report", element: <AdminWithdrawals reportOnly /> },
       { path: "income/roi-to-roi", element: <AdminRoiToRoiIncome /> },
+      { path: "stop-roi", element: <AdminUserControl mode="roi" /> },
+      { path: "stop-withdraw", element: <AdminUserControl mode="withdraw" /> },
       { path: "plan-requests", element: <PlanRequests /> },
       { path: "payment-history", element: <PaymentHistoryPage /> },
       { path: "host-requests", element: <HostRequestsPage /> },

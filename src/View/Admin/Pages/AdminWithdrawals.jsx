@@ -74,7 +74,7 @@ export default function AdminWithdrawals({ reportOnly = false }) {
                   <th>Name</th>
                   <th>Amount</th>
                   <th>Payout</th>
-                  <th>USDT Address</th>
+                  <th>USDT Address(BEP20)</th>
                   <th>Status</th>
                   <th>Date</th>
                   {!reportOnly && <th>Action</th>}

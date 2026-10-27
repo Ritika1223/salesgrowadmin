@@ -80,6 +80,23 @@ const NAV_LINKS = [
   },
 
   {
+    icon: <i className="bi bi-sliders"></i>,
+    label: "User Control",
+    children: [
+      {
+        to: "admin/stop-roi",
+        icon: <i className="bi bi-graph-up-arrow"></i>,
+        label: "Stop ROI",
+      },
+      {
+        to: "admin/stop-withdraw",
+        icon: <i className="bi bi-cash-stack"></i>,
+        label: "Stop Withdrawal",
+      },
+    ],
+  },
+
+  {
     to: "admin/users",
     icon: <i className="bi bi-person-circle"></i>,
     label: "All Users",
@@ -127,6 +144,7 @@ export default function Header() {
     if (path.startsWith("/admin/fund")) open.Fund = true;
     if (path.startsWith("/admin/withdraw")) open.Withdrawal = true;
     if (path.startsWith("/admin/income")) open.Income = true;
+    if (path.startsWith("/admin/stop")) open["User Control"] = true;
     return open;
   });
   const hrefFor = (to) => (to.startsWith("/") ? to : `/${to}`);
