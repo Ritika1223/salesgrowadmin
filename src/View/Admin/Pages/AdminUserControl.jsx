@@ -138,7 +138,7 @@ export default function AdminUserControl({ mode = "roi" }) {
                         <td>
                           <button
                             type="button"
-                            className={stopped ? "approve-btn" : "decline-btn"}
+                            className={`control-action-btn ${stopped ? "is-resume" : "is-stop"}`}
                             disabled={actionId === user._id}
                             onClick={() => toggle(user)}
                           >

@@ -864,4 +864,45 @@ select:-webkit-autofill {
     padding: 0 !important;
     font-size: 16px !important;
   }
+
+  aside.sidebar.mobile {
+    padding: 6px 12px 16px !important;
+  }
+
+  .sidebar.mobile .cp-mobile-sidebar-topbar {
+    height: auto !important;
+    min-height: 0 !important;
+    padding: 2px 0 4px !important;
+  }
+
+  .sidebar.mobile .nav {
+    margin-top: 0 !important;
+  }
+}
+
+.control-action-btn {
+  border: 0;
+  border-radius: 999px;
+  min-width: 72px;
+  min-height: 32px;
+  padding: 6px 12px;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1;
+  color: #fff;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.control-action-btn.is-stop {
+  background: #e03131;
+}
+
+.control-action-btn.is-resume {
+  background: #12b886;
+}
+
+.control-action-btn:disabled {
+  opacity: 0.6;
+  cursor: wait;
 }
