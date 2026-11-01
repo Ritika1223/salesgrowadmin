@@ -109,7 +109,7 @@ const NAV_LINKS = [
   {
     to: "admin/payment-history",
     icon: <i className="bi bi-receipt"></i>,
-    label: "Payment History",
+    label: "Coins Request ",
   },
   {
     to: "admin/host-requests",
