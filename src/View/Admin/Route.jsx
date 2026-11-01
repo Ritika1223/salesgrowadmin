@@ -14,6 +14,7 @@ import HostRequestsPage from "./Pages/HostRequests";
 import PlanRequests from "./Pages/PlanRequests";
 import AdminFundRequests from "./Pages/AdminFundRequests";
 import AdminWithdrawals from "./Pages/AdminWithdrawals";
+import AdminCoinWithdrawals from "./Pages/AdminCoinWithdrawals";
 import AdminRoiToRoiIncome from "./Pages/AdminRoiToRoiIncome";
 import AdminUserControl from "./Pages/AdminUserControl";
 
@@ -53,6 +54,7 @@ const Routes = [
       { path: "fund/report", element: <AdminFundRequests reportOnly /> },
       { path: "withdraw/requests", element: <AdminWithdrawals /> },
       { path: "withdraw/report", element: <AdminWithdrawals reportOnly /> },
+      { path: "coin-withdrawals", element: <AdminCoinWithdrawals /> },
       { path: "income/roi-to-roi", element: <AdminRoiToRoiIncome /> },
       { path: "stop-roi", element: <AdminUserControl mode="roi" /> },
       { path: "stop-withdraw", element: <AdminUserControl mode="withdraw" /> },

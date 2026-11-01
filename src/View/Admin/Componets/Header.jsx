@@ -63,6 +63,11 @@ const NAV_LINKS = [
   },
 
   {
+    to: "admin/coin-withdrawals",
+    icon: <i className="bi bi-coin"></i>,
+    label: "Coin Withdrawals",
+  },
+  {
     icon: <i className="bi bi-cash-stack"></i>,
     label: "Withdrawal",
     children: [
