@@ -84,22 +84,22 @@ const NAV_LINKS = [
     ],
   },
 
-  {
-    icon: <i className="bi bi-sliders"></i>,
-    label: "User Control",
-    children: [
-      {
-        to: "admin/stop-roi",
-        icon: <i className="bi bi-graph-up-arrow"></i>,
-        label: "Stop ROI",
-      },
-      {
-        to: "admin/stop-withdraw",
-        icon: <i className="bi bi-cash-stack"></i>,
-        label: "Stop Withdrawal",
-      },
-    ],
-  },
+  // {
+  //   icon: <i className="bi bi-sliders"></i>,
+  //   label: "User Control",
+  //   children: [
+  //     {
+  //       to: "admin/stop-roi",
+  //       icon: <i className="bi bi-graph-up-arrow"></i>,
+  //       label: "Stop ROI",
+  //     },
+  //     {
+  //       to: "admin/stop-withdraw",
+  //       icon: <i className="bi bi-cash-stack"></i>,
+  //       label: "Stop Withdrawal",
+  //     },
+  //   ],
+  // },
 
   {
     to: "admin/users",

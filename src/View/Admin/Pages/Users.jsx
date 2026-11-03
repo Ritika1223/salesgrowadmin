@@ -215,6 +215,60 @@ export default function Users() {
     }
   };
 
+  const toggleControl = async (user, field) => {
+    const next = !user[field];
+    const isRoi = field === "roiStopped";
+    const label = isRoi ? "ROI" : "withdrawal";
+    const result = await Swal.fire({
+      title: next ? `Stop ${label}?` : `Resume ${label}?`,
+      text: `Are you sure you want to ${next ? "stop" : "resume"} ${label} for ${user.name || "this user"}?`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: next
+        ? isRoi
+          ? "Stop ROI"
+          : "Stop Withdrawal"
+        : isRoi
+          ? "Resume ROI"
+          : "Resume Withdrawal",
+    });
+    if (!result.isConfirmed) return;
+
+    const token = getAdminToken();
+    if (!token) {
+      navigate("/admin/login");
+      return;
+    }
+
+    setActionId(user._id);
+    try {
+      const res = await fetch(`${API_ADMIN}/users/${user._id}/controls`, {
+        method: "PATCH",
+        headers: adminHeaders(),
+        body: JSON.stringify({ [field]: next }),
+      });
+      if (res.status === 401) {
+        clearAdminSession();
+        navigate("/admin/login");
+        return;
+      }
+      const data = await res.json();
+      if (!res.ok) {
+        throw new Error(data.message || "Could not update this user");
+      }
+      setUsers((prev) =>
+        prev.map((item) =>
+          item._id === user._id ? { ...item, [field]: next } : item
+        )
+      );
+      Swal.fire("Done", data.message || "Updated", "success");
+    } catch (err) {
+      Swal.fire("Error", err.message || "Could not update this user", "error");
+    } finally {
+      setActionId("");
+    }
+  };
+
   const deleteUser = async (user) => {
     const result = await Swal.fire({
       title: "Delete this profile?",
@@ -438,6 +492,22 @@ export default function Users() {
     onClick={() => deleteUser(u)}
   >
     Delete
+  </button>
+  <button
+    type="button"
+    className={`control-action-btn ${u.roiStopped ? "is-resume" : "is-stop"}`}
+    disabled={actionId === u._id}
+    onClick={() => toggleControl(u, "roiStopped")}
+  >
+    {u.roiStopped ? "Resume ROI" : "Stop ROI"}
+  </button>
+  <button
+    type="button"
+    className={`control-action-btn ${u.withdrawStopped ? "is-resume" : "is-stop"}`}
+    disabled={actionId === u._id}
+    onClick={() => toggleControl(u, "withdrawStopped")}
+  >
+    {u.withdrawStopped ? "Resume Withdrawal" : "Stop Withdrawal"}
   </button>
 </div>
                     </td>

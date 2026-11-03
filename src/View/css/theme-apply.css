@@ -588,6 +588,16 @@ select:-webkit-autofill {
   color: var(--color-ink) !important;
 }
 
+.app > main button.stats-card {
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+}
+
+.app > main button.stats-card p {
+  color: var(--color-muted) !important;
+}
+
 .app > main .users-header-card,
 .app > main .stats-card,
 .app > main .users-table-card,
