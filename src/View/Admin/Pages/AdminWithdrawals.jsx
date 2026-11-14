@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { API_ADMIN } from "../../../config/api";
 import { getAdminToken } from "../../../utils/adminAuth";
+import { notifyAdminRequestsChanged } from "../../../utils/adminRequests";
 
 function authHeaders() {
   const t = getAdminToken();
@@ -43,6 +44,7 @@ export default function AdminWithdrawals({ reportOnly = false }) {
         { headers: authHeaders() }
       );
       await load();
+      notifyAdminRequestsChanged();
     } catch (err) {
       alert(err?.response?.data?.message || "Action failed");
     }

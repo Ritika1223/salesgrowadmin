@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { API_ADMIN } from "../../../config/api";
+import { API_ADMIN, getUserSiteOrigin } from "../../../config/api";
 import { getAdminToken, clearAdminSession } from "../../../utils/adminAuth";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -30,13 +30,18 @@ export default function Users() {
   });
 
   const [currentPage, setCurrentPage] = useState(1);
-  const usersPerPage = 10;
+  const [usersPerPage, setUsersPerPage] = useState(50);
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
+  const [planFilter, setPlanFilter] = useState("all");
+  const [openingId, setOpeningId] = useState("");
+
+  const pageSizeOptions = [10, 20, 50, 100, 200, 500];
+  const planOptions = ["BASIC", "STANDARD", "PREMIUM", "INVEST"];
 
  const filteredUsers = users.filter((user) => {
   const matchesSearch =
-    `${user.name} ${user.email} ${user.phone || ""} ${user.city || ""}`
+    `${user.name} ${user.email} ${user.phone || ""} ${user.city || ""} ${user.referralCode || ""}`
       .toLowerCase()
       .includes(search.toLowerCase());
 
@@ -48,7 +53,15 @@ export default function Users() {
         ? isInactive
         : !isInactive;
 
-  return matchesSearch && matchesStatus;
+  const plan = String(user.plan || "").toUpperCase();
+  const matchesPlan =
+    planFilter === "all"
+      ? true
+      : planFilter === "none"
+        ? !plan
+        : plan === planFilter;
+
+  return matchesSearch && matchesStatus && matchesPlan;
 });
 
   const totalPages = Math.ceil(
@@ -269,6 +282,59 @@ export default function Users() {
     }
   };
 
+  const openUserLogin = async (user) => {
+    if (user.isDisabled) {
+      Swal.fire(
+        "Inactive account",
+        "Activate this user before opening their login.",
+        "info"
+      );
+      return;
+    }
+
+    const token = getAdminToken();
+    if (!token) {
+      navigate("/admin/login");
+      return;
+    }
+
+    setOpeningId(user._id);
+    try {
+      const res = await fetch(`${API_ADMIN}/users/${user._id}/session`, {
+        method: "POST",
+        headers: adminHeaders(),
+      });
+      if (res.status === 401) {
+        clearAdminSession();
+        navigate("/admin/login");
+        return;
+      }
+      const data = await res.json();
+      if (!res.ok || !data.token) {
+        throw new Error(data.message || "Could not open this login");
+      }
+
+      const access = encodeURIComponent(
+        JSON.stringify({ token: data.token, user: data.user })
+      );
+      const opened = window.open(
+        `${getUserSiteOrigin()}/login#adminAccess=${access}`,
+        "_blank"
+      );
+      if (!opened) {
+        Swal.fire(
+          "Popup blocked",
+          "Allow popups for this site, then click the ID again.",
+          "warning"
+        );
+      }
+    } catch (err) {
+      Swal.fire("Error", err.message || "Could not open this login", "error");
+    } finally {
+      setOpeningId("");
+    }
+  };
+
   const deleteUser = async (user) => {
     const result = await Swal.fire({
       title: "Delete this profile?",
@@ -353,7 +419,7 @@ export default function Users() {
     <input
       type="text"
       className="search-input"
-      placeholder="Search users..."
+      placeholder="Search name, ID, phone..."
       value={search}
       onChange={(e) => {
         setSearch(e.target.value);
@@ -380,12 +446,50 @@ export default function Users() {
     </select>
   </div>
 
+  <div className="filter-wrapper">
+    <i className="bi bi-box-seam"></i>
+
+    <select
+      className="status-filter"
+      value={planFilter}
+      onChange={(e) => {
+        setPlanFilter(e.target.value);
+        setCurrentPage(1);
+      }}
+    >
+      <option value="all">All Packages</option>
+      {planOptions.map((plan) => (
+        <option key={plan} value={plan}>{plan}</option>
+      ))}
+      <option value="none">No Package</option>
+    </select>
+  </div>
+
+  <div className="filter-wrapper page-size-filter">
+    <i className="bi bi-list-ol"></i>
+
+    <select
+      className="status-filter"
+      value={usersPerPage}
+      onChange={(e) => {
+        setUsersPerPage(Number(e.target.value));
+        setCurrentPage(1);
+      }}
+    >
+      {pageSizeOptions.map((size) => (
+        <option key={size} value={size}>{size} / page</option>
+      ))}
+    </select>
+  </div>
+
 </div>
 
         {loading ? (
           <div className="empty-state">Loading Users...</div>
         ) : users.length === 0 ? (
           <div className="empty-state">No users found</div>
+        ) : filteredUsers.length === 0 ? (
+          <div className="empty-state">No users match these filters</div>
         ) : (
           <div className="table-responsive">
 
@@ -394,12 +498,15 @@ export default function Users() {
               <thead>
                 <tr>
                   <th>#</th>
+                  <th>ID</th>
                   <th>User</th>
                   <th>Phone</th>
                   <th>Password</th>
+                  <th>Package</th>
                   <th>Coins</th>
                   <th>Referrals</th>
                   <th>Total Earning</th>
+                  <th>Withdrawal</th>
                   <th>Status</th>
                   <th>Join Date</th>
                   <th>Actions</th>
@@ -411,6 +518,18 @@ export default function Users() {
                   <tr key={u._id}>
 
                     <td>{indexOfFirstUser + index + 1}</td>
+
+                    <td>
+                      <button
+                        type="button"
+                        className="user-id-link"
+                        disabled={openingId === u._id}
+                        title="Open this user's login"
+                        onClick={() => openUserLogin(u)}
+                      >
+                        {openingId === u._id ? "Opening..." : (u.referralCode || "Open")}
+                      </button>
+                    </td>
 
                     <td>
                       <div className="user-info">
@@ -430,6 +549,12 @@ export default function Users() {
                     </td>
 
                     <td>
+                      <span className="group-badge">
+                        {u.plan || "No package"}
+                      </span>
+                    </td>
+
+                    <td>
                       <span className="coin-badge">
                         {u.walletBalance || 0}
                       </span>
@@ -444,6 +569,12 @@ export default function Users() {
                     <td>
                       <span className="group-badge">
                         {u.totalEarning || 0}
+                      </span>
+                    </td>
+
+                    <td>
+                      <span className="coin-badge">
+                        {Number(u.totalWithdraw || 0).toLocaleString()}
                       </span>
                     </td>
 

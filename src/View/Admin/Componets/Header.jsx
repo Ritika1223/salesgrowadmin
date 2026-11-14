@@ -1,5 +1,8 @@
-import React, { useState } from "react";
-import { Outlet } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Outlet, useLocation } from "react-router-dom";
+import { API_ADMIN } from "../../../config/api";
+import { getAdminToken } from "../../../utils/adminAuth";
+import { ADMIN_REQUESTS_CHANGED } from "../../../utils/adminRequests";
 function useIsMobile() {
   const [isMobile, setIsMobile] = React.useState(window.innerWidth <= 768);
   React.useEffect(() => {
@@ -27,11 +30,6 @@ const NAV_LINKS = [
     to: "admin/bankDetail",
     icon: <i className="bi bi-bank"></i>,
     label: "Bank Detail",
-  },
-  {
-    to: "admin/add-fund",
-    icon: <i className="bi bi-coin"></i>,
-    label: "Add Fund",
   },
   {
     icon: <i className="bi bi-cash-coin"></i>,
@@ -70,6 +68,7 @@ const NAV_LINKS = [
   {
     icon: <i className="bi bi-cash-stack"></i>,
     label: "Withdrawal",
+    countKey: "withdrawal",
     children: [
       {
         to: "admin/withdraw/requests",
@@ -140,9 +139,34 @@ const NAV_LINKS = [
   }
 ];
 
+const COUNT_BY_PATH = {
+  "admin/plan-requests": "plan",
+  "admin/payment-history": "coins",
+  "admin/host-requests": "host",
+  "admin/withdraw/requests": "withdrawal",
+};
+
+function requestCount(counts, item) {
+  const key = item.countKey || COUNT_BY_PATH[item.to];
+  const value = key ? Number(counts[key]) || 0 : 0;
+  return value > 0 ? value : 0;
+}
+
+function CountBadge({ count }) {
+  if (!count) return null;
+  return <span className="nav-count">{count > 99 ? "99+" : count}</span>;
+}
+
 export default function Header() {
   const isMobile = useIsMobile();
+  const location = useLocation();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [counts, setCounts] = useState({
+    plan: 0,
+    coins: 0,
+    host: 0,
+    withdrawal: 0,
+  });
   const [openMenus, setOpenMenus] = useState(() => {
     const path = window.location.pathname;
     const open = {};
@@ -152,6 +176,42 @@ export default function Header() {
     if (path.startsWith("/admin/stop")) open["User Control"] = true;
     return open;
   });
+  useEffect(() => {
+    let stopped = false;
+
+    const loadCounts = async () => {
+      const token = getAdminToken();
+      if (!token || stopped) return;
+      try {
+        const res = await fetch(`${API_ADMIN}/request-counts`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        if (!res.ok) return;
+        const data = await res.json();
+        if (stopped) return;
+        setCounts({
+          plan: Number(data.plan) || 0,
+          coins: Number(data.coins) || 0,
+          host: Number(data.host) || 0,
+          withdrawal: Number(data.withdrawal) || 0,
+        });
+      } catch {
+        // Keep the last counts if the request fails.
+      }
+    };
+
+    loadCounts();
+    const timer = setInterval(loadCounts, 20000);
+    window.addEventListener("focus", loadCounts);
+    window.addEventListener(ADMIN_REQUESTS_CHANGED, loadCounts);
+    return () => {
+      stopped = true;
+      clearInterval(timer);
+      window.removeEventListener("focus", loadCounts);
+      window.removeEventListener(ADMIN_REQUESTS_CHANGED, loadCounts);
+    };
+  }, [location.pathname]);
+
   const hrefFor = (to) => (to.startsWith("/") ? to : `/${to}`);
 
   const linkActive = (to) => {
@@ -162,7 +222,7 @@ export default function Header() {
     return windowPath.startsWith(linkPath);
   };
 
-  const renderLink = ({ to, icon, label, onClick }) => {
+  const renderLink = ({ to, icon, label, onClick, countKey }) => {
     const active = linkActive(to);
     return (
       <a
@@ -178,7 +238,8 @@ export default function Header() {
         }}
       >
         <span className="ico">{icon}</span>
-        {label}
+        <span className="nav-label-text">{label}</span>
+        <CountBadge count={requestCount(counts, { to, countKey })} />
       </a>
     );
   };
@@ -200,7 +261,8 @@ export default function Header() {
             }
           >
             <span className="ico">{item.icon}</span>
-            {item.label}
+            <span className="nav-label-text">{item.label}</span>
+            <CountBadge count={requestCount(counts, item)} />
             <i className={`bi ${open ? "bi-chevron-up" : "bi-chevron-down"}`}></i>
           </button>
           {open && (

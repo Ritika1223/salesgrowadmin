@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { API_ADMIN, API_BASE, getApiOrigin } from "../../../config/api";
 import { getAdminToken } from "../../../utils/adminAuth";
+import { notifyAdminRequestsChanged } from "../../../utils/adminRequests";
 
 function authHeaders() {
   const t = getAdminToken();
@@ -79,6 +80,7 @@ export default function PlanRequestsPage() {
         { headers: authHeaders() }
       );
       setRefreshFlag((f) => f + 1);
+      notifyAdminRequestsChanged();
     } catch (err) {
       alert(err?.response?.data?.message || "Action failed");
     }

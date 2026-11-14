@@ -123,9 +123,29 @@ aside.sidebar {
 
 .nav-group-label .bi-chevron-up,
 .nav-group-label .bi-chevron-down {
-  margin-left: auto;
+  margin-left: 8px;
   background: transparent !important;
   color: var(--color-ink) !important;
+  flex-shrink: 0;
+}
+
+.nav-label-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.nav-count {
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: #ef4444;
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 20px;
+  text-align: center;
+  flex-shrink: 0;
 }
 
 .nav-group.open > .nav-group-label {

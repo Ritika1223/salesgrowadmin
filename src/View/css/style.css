@@ -17592,6 +17592,8 @@ button.stats-card p{
 
 .search-filter-row{
     display:flex;
+    flex-wrap:wrap;
+    align-items:center;
     gap:15px;
     margin-bottom:25px;
 }
@@ -17629,6 +17631,30 @@ button.stats-card p{
 .status-filter option{
     background:#14142f;
     color:#fff;
+}
+
+.page-size-filter{
+    min-width:150px;
+}
+
+.user-id-link{
+    background:transparent;
+    border:none;
+    padding:0;
+    color:#7dd3fc;
+    font-weight:700;
+    letter-spacing:.3px;
+    cursor:pointer;
+    text-decoration:underline;
+}
+
+.user-id-link:hover:not(:disabled){
+    color:#fff;
+}
+
+.user-id-link:disabled{
+    opacity:.6;
+    cursor:wait;
 }
 
 @media(max-width:768px){

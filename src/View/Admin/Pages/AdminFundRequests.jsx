@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { API_ADMIN } from "../../../config/api";
 import { getAdminToken } from "../../../utils/adminAuth";
+import { notifyAdminRequestsChanged } from "../../../utils/adminRequests";
 
 function authHeaders() {
   const t = getAdminToken();
@@ -62,6 +63,7 @@ export default function AdminFundRequests({ reportOnly = false }) {
         { headers: authHeaders() }
       );
       setRefreshFlag((f) => f + 1);
+      notifyAdminRequestsChanged();
     } catch (err) {
       alert(err?.response?.data?.message || "Action failed");
     }

@@ -9,7 +9,6 @@ import AdminHeaderLayout from "./Componets/AdminHeaderLayout";
 import { isAdminLoggedIn } from "../../utils/adminAuth";
 import BankDetailPage from "./Pages/BankDetail";
 import PaymentHistoryPage from "./Pages/PaymentHistory";
-import AddFundPage from "./Pages/AddFund";
 import HostRequestsPage from "./Pages/HostRequests";
 import PlanRequests from "./Pages/PlanRequests";
 import AdminFundRequests from "./Pages/AdminFundRequests";
@@ -49,7 +48,7 @@ const Routes = [
       { path: "dashboard", element: <AdminDashboard /> },
       { path: "users", element: <Users /> },
       { path: "bankDetail", element: <BankDetailPage /> },
-      { path: "add-fund", element: <AddFundPage /> },
+      { path: "add-fund", element: <Navigate to="/admin/payment-history" replace /> },
       { path: "fund/requests", element: <AdminFundRequests /> },
       { path: "fund/report", element: <AdminFundRequests reportOnly /> },
       { path: "withdraw/requests", element: <AdminWithdrawals /> },

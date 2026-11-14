@@ -37,3 +37,12 @@ export function getSiteOrigin() {
 
 /** Back-compat alias (older Referral.jsx used this name). */
 export const getPublicSiteOrigin = getSiteOrigin;
+
+/** Member site opened when admin clicks a user ID. */
+export function getUserSiteOrigin() {
+  const fromEnv = process.env.REACT_APP_USER_SITE_URL;
+  if (fromEnv && String(fromEnv).trim()) {
+    return trimTrailingSlashes(fromEnv);
+  }
+  return "https://net.kakowa.online";
+}

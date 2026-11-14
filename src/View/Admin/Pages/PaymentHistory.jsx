@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { API_ADMIN, API_BASE, getApiOrigin } from "../../../config/api";
 import { getAdminToken } from "../../../utils/adminAuth";
+import { notifyAdminRequestsChanged } from "../../../utils/adminRequests";
 
 function authHeaders() {
   const t = getAdminToken();
@@ -64,15 +65,23 @@ const rowsPerPage = 10;
   };
 
   const handleStatusUpdate = async (id, status) => {
-    if (!window.confirm(`Are you sure you want to ${status} this payment?`)) return;
+    const question =
+      status === "approved"
+        ? "Approve this payment and credit the coins now?"
+        : "Decline this payment?";
+    if (!window.confirm(question)) return;
     setActionLoading(id + status);
     try {
-      await axios.patch(
+      const res = await axios.patch(
         `${API_ADMIN}/payment-history/${id}/status`,
         { status },
         { headers: authHeaders() }
       );
+      if (status === "approved" && res.data?.message) {
+        window.alert(res.data.message);
+      }
       setRefreshFlag((f) => f + 1);
+      notifyAdminRequestsChanged();
     } catch (err) {
       alert(err?.response?.data?.message || "Action failed");
     }
@@ -188,8 +197,8 @@ function statusClass(status) {
         </div>
 
         <div>
-            <h2>Payment History</h2>
-            <p>Manage all payment requests</p>
+            <h2>Coins Request</h2>
+            <p>Approving a payment credits the coins automatically</p>
         </div>
 
     </div>
@@ -487,11 +496,15 @@ function statusClass(status) {
 
                       {p.status === "approved" && (
 
-                        <span className="approved-text">
-
-                          Ready
-
-                        </span>
+                        <button
+                          className="approve-btn"
+                          disabled={actionLoading === p._id + "approved"}
+                          onClick={() =>
+                            handleStatusUpdate(p._id, "approved")
+                          }
+                        >
+                          Credit
+                        </button>
 
                       )}
 
