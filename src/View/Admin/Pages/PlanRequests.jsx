@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { API_ADMIN, API_BASE, getApiOrigin } from "../../../config/api";
 import { getAdminToken } from "../../../utils/adminAuth";
+import UserIdLink from "../Componets/UserIdLink";
 import { notifyAdminRequestsChanged } from "../../../utils/adminRequests";
 
 function authHeaders() {
@@ -166,6 +167,7 @@ export default function PlanRequestsPage() {
               <thead>
                 <tr>
                   <th>#</th>
+                  <th>ID</th>
                   <th>Applicant</th>
                   <th>Plan</th>
                   <th>Amount</th>
@@ -179,7 +181,7 @@ export default function PlanRequestsPage() {
               <tbody>
                 {currentRows.length === 0 ? (
                   <tr>
-                    <td colSpan="9">
+                    <td colSpan="10">
                       <div className="empty-state">
                         <i className="bi bi-inbox"></i>
                         <h5>No plan requests</h5>
@@ -193,6 +195,7 @@ export default function PlanRequestsPage() {
                     return (
                       <tr key={r._id}>
                         <td>{indexOfFirst + index + 1}</td>
+                        <td><UserIdLink user={user} /></td>
                         <td>
                           <div className="user-info">
                             <div>

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { API_ADMIN, getUserSiteOrigin } from "../../../config/api";
+import { API_ADMIN } from "../../../config/api";
+import UserIdLink from "../Componets/UserIdLink";
 import { getAdminToken, clearAdminSession } from "../../../utils/adminAuth";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -34,14 +35,13 @@ export default function Users() {
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("all");
   const [planFilter, setPlanFilter] = useState("all");
-  const [openingId, setOpeningId] = useState("");
 
   const pageSizeOptions = [10, 20, 50, 100, 200, 500];
-  const planOptions = ["BASIC", "STANDARD", "PREMIUM", "INVEST"];
+  const planOptions = [ "INVEST"];
 
  const filteredUsers = users.filter((user) => {
   const matchesSearch =
-    `${user.name} ${user.email} ${user.phone || ""} ${user.city || ""} ${user.referralCode || ""}`
+    `${user.name} ${user.email} ${user.phone || ""} ${user.city || ""} ${user.referralCode || ""} ${user.nickname || ""}`
       .toLowerCase()
       .includes(search.toLowerCase());
 
@@ -282,59 +282,6 @@ export default function Users() {
     }
   };
 
-  const openUserLogin = async (user) => {
-    if (user.isDisabled) {
-      Swal.fire(
-        "Inactive account",
-        "Activate this user before opening their login.",
-        "info"
-      );
-      return;
-    }
-
-    const token = getAdminToken();
-    if (!token) {
-      navigate("/admin/login");
-      return;
-    }
-
-    setOpeningId(user._id);
-    try {
-      const res = await fetch(`${API_ADMIN}/users/${user._id}/session`, {
-        method: "POST",
-        headers: adminHeaders(),
-      });
-      if (res.status === 401) {
-        clearAdminSession();
-        navigate("/admin/login");
-        return;
-      }
-      const data = await res.json();
-      if (!res.ok || !data.token) {
-        throw new Error(data.message || "Could not open this login");
-      }
-
-      const access = encodeURIComponent(
-        JSON.stringify({ token: data.token, user: data.user })
-      );
-      const opened = window.open(
-        `${getUserSiteOrigin()}/login#adminAccess=${access}`,
-        "_blank"
-      );
-      if (!opened) {
-        Swal.fire(
-          "Popup blocked",
-          "Allow popups for this site, then click the ID again.",
-          "warning"
-        );
-      }
-    } catch (err) {
-      Swal.fire("Error", err.message || "Could not open this login", "error");
-    } finally {
-      setOpeningId("");
-    }
-  };
-
   const deleteUser = async (user) => {
     const result = await Swal.fire({
       title: "Delete this profile?",
@@ -499,6 +446,7 @@ export default function Users() {
                 <tr>
                   <th>#</th>
                   <th>ID</th>
+                  <th>Nickname</th>
                   <th>User</th>
                   <th>Phone</th>
                   <th>Password</th>
@@ -520,20 +468,13 @@ export default function Users() {
                     <td>{indexOfFirstUser + index + 1}</td>
 
                     <td>
-                      <button
-                        type="button"
-                        className="user-id-link"
-                        disabled={openingId === u._id}
-                        title="Open this user's login"
-                        onClick={() => openUserLogin(u)}
-                      >
-                        {openingId === u._id ? "Opening..." : (u.referralCode || "Open")}
-                      </button>
+                      <UserIdLink user={u} />
                     </td>
-
+<td>{u.nickname || "-"}</td>
                     <td>
                       <div className="user-info">
                         <div>
+                          
                           <div className="user-name">{u.name}</div>
                           <div className="user-email">{u.email}</div>
                         </div>
@@ -550,7 +491,9 @@ export default function Users() {
 
                     <td>
                       <span className="group-badge">
-                        {u.plan || "No package"}
+                        {u.plan === "INVEST"
+                          ? `INVEST $${Number(u.investmentAmount || 0).toLocaleString()}`
+                          : u.plan || "No package"}
                       </span>
                     </td>
 

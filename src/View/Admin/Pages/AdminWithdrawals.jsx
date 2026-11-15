@@ -3,6 +3,7 @@ import axios from "axios";
 import { API_ADMIN } from "../../../config/api";
 import { getAdminToken } from "../../../utils/adminAuth";
 import { notifyAdminRequestsChanged } from "../../../utils/adminRequests";
+import UserIdLink from "../Componets/UserIdLink";
 
 function authHeaders() {
   const t = getAdminToken();
@@ -73,6 +74,7 @@ export default function AdminWithdrawals({ reportOnly = false }) {
               <thead>
                 <tr>
                   <th>S.No</th>
+                  <th>ID</th>
                   <th>Name</th>
                   <th>Amount</th>
                   <th>Payout</th>
@@ -85,7 +87,7 @@ export default function AdminWithdrawals({ reportOnly = false }) {
               <tbody>
                 {rows.length === 0 ? (
                   <tr>
-                    <td colSpan={reportOnly ? 7 : 8}>No withdrawal requests</td>
+                    <td colSpan={reportOnly ? 8 : 9}>No withdrawal requests</td>
                   </tr>
                 ) : (
                   rows.map((row, index) => {
@@ -93,6 +95,7 @@ export default function AdminWithdrawals({ reportOnly = false }) {
                     return (
                       <tr key={row._id}>
                         <td>{index + 1}</td>
+                        <td><UserIdLink user={user} /></td>
                         <td>{user.name || "-"}</td>
                         <td>{row.amount}</td>
                         <td>{row.payout}</td>

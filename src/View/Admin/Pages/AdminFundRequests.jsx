@@ -3,6 +3,7 @@ import axios from "axios";
 import { API_ADMIN } from "../../../config/api";
 import { getAdminToken } from "../../../utils/adminAuth";
 import { notifyAdminRequestsChanged } from "../../../utils/adminRequests";
+import UserIdLink from "../Componets/UserIdLink";
 
 function authHeaders() {
   const t = getAdminToken();
@@ -87,7 +88,7 @@ export default function AdminFundRequests({ reportOnly = false }) {
   const indexOfLast = currentPage * rowsPerPage;
   const indexOfFirst = indexOfLast - rowsPerPage;
   const currentRows = filtered.slice(indexOfFirst, indexOfLast);
-  const colSpan = reportOnly ? 7 : 8;
+  const colSpan = reportOnly ? 8 : 9;
 
   return (
     <div className="admin-users-page">
@@ -137,6 +138,7 @@ export default function AdminFundRequests({ reportOnly = false }) {
               <thead>
                 <tr>
                   <th>S.No</th>
+                  <th>ID</th>
                   <th>Name</th>
                   <th>Amount</th>
                   <th>Transaction ID</th>
@@ -161,6 +163,7 @@ export default function AdminFundRequests({ reportOnly = false }) {
                     return (
                       <tr key={r._id}>
                         <td>{indexOfFirst + index + 1}</td>
+                        <td><UserIdLink user={user} /></td>
                         <td>{r.name || user.name || "-"}</td>
                         <td>$ {Number(r.amount || 0).toLocaleString()}</td>
                         <td>{r.transactionId || "-"}</td>

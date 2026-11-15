@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import axios from "axios";
 import { API_ADMIN } from "../../../config/api";
 import { getAdminToken } from "../../../utils/adminAuth";
+import UserIdLink from "../Componets/UserIdLink";
 
 function authHeaders() {
   const t = getAdminToken();
@@ -135,9 +136,9 @@ export default function AdminRoiToRoiIncome() {
                       <tr key={row._id}>
                         <td>{index + 1}</td>
                         <td>{personLabel(receiver)}</td>
-                        <td>{receiver.referralCode || "—"}</td>
+                        <td><UserIdLink user={receiver} /></td>
                         <td>{personLabel(from)}</td>
-                        <td>{from.referralCode || "—"}</td>
+                        <td><UserIdLink user={from} /></td>
                         <td>{row.level || "—"}</td>
                         <td>{roiShare(row.level)}</td>
                         <td>{row.amount}</td>

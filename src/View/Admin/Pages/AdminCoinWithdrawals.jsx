@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { API_ADMIN } from "../../../config/api";
 import { getAdminToken } from "../../../utils/adminAuth";
+import UserIdLink from "../Componets/UserIdLink";
 
 function authHeaders() {
   const t = getAdminToken();
@@ -72,6 +73,7 @@ export default function AdminCoinWithdrawals() {
               <thead>
                 <tr>
                   <th>S.No</th>
+                  <th>ID</th>
                   <th>User</th>
                   <th>Coins</th>
                   <th>UPI / USDT</th>
@@ -83,7 +85,7 @@ export default function AdminCoinWithdrawals() {
               <tbody>
                 {rows.length === 0 ? (
                   <tr>
-                    <td colSpan={7}>No coin withdrawal requests</td>
+                    <td colSpan={8}>No coin withdrawal requests</td>
                   </tr>
                 ) : (
                   rows.map((row, index) => {
@@ -91,6 +93,7 @@ export default function AdminCoinWithdrawals() {
                     return (
                       <tr key={row._id}>
                         <td>{index + 1}</td>
+                        <td><UserIdLink user={user} /></td>
                         <td>{user.nickname || user.name || "-"}</td>
                         <td>{Number(row.amount || 0).toLocaleString()}</td>
                         <td>{row.payoutAddress}</td>
@@ -104,14 +107,14 @@ export default function AdminCoinWithdrawals() {
                                 disabled={actionLoading === row._id + "approved"}
                                 onClick={() => updateStatus(row._id, "approved")}
                               >
-                                Accept
+                                <i className="bi bi-check"></i>
                               </button>
                               <button
                                 className="decline-btn"
                                 disabled={actionLoading === row._id + "rejected"}
                                 onClick={() => updateStatus(row._id, "rejected")}
                               >
-                                Reject
+                                <i className="bi bi-x"></i>
                               </button>
                             </div>
                           )}

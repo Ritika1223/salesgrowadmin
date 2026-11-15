@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { API_ADMIN, API_BASE, getApiOrigin } from "../../../config/api";
 import { getAdminToken } from "../../../utils/adminAuth";
+import UserIdLink from "../Componets/UserIdLink";
 import { notifyAdminRequestsChanged } from "../../../utils/adminRequests";
 
 function authHeaders() {
@@ -158,6 +159,7 @@ export default function HostRequestsPage() {
               <thead>
                 <tr>
                   <th>#</th>
+                  <th>ID</th>
                   <th>Applicant</th>
                   <th>Amount</th>
                   <th>Txn / UPI</th>
@@ -170,7 +172,7 @@ export default function HostRequestsPage() {
               <tbody>
                 {currentRows.length === 0 ? (
                   <tr>
-                    <td colSpan="8">
+                    <td colSpan="9">
                       <div className="empty-state">
                         <i className="bi bi-inbox"></i>
                         <h5>No host requests</h5>
@@ -184,6 +186,7 @@ export default function HostRequestsPage() {
                     return (
                       <tr key={r._id}>
                         <td>{indexOfFirst + index + 1}</td>
+                        <td><UserIdLink user={user} /></td>
                         <td>
                           <div className="user-info">
                             <div>

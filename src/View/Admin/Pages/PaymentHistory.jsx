@@ -3,6 +3,7 @@ import axios from "axios";
 import { API_ADMIN, API_BASE, getApiOrigin } from "../../../config/api";
 import { getAdminToken } from "../../../utils/adminAuth";
 import { notifyAdminRequestsChanged } from "../../../utils/adminRequests";
+import UserIdLink from "../Componets/UserIdLink";
 
 function authHeaders() {
   const t = getAdminToken();
@@ -301,6 +302,7 @@ function statusClass(status) {
         <thead>
           <tr>
             <th>#</th>
+            <th>ID</th>
             <th>User</th>
             <th>Amount</th>
             <th>Transaction ID</th>
@@ -316,7 +318,7 @@ function statusClass(status) {
           {currentPayments.length === 0 ? (
 
             <tr>
-              <td colSpan="8">
+              <td colSpan="9">
                 <div className="empty-state">
                   <i className="bi bi-wallet2"></i>
                   <h5>No Payment Found</h5>
@@ -339,6 +341,10 @@ function statusClass(status) {
 
                   <td>
                     {indexOfFirst + index + 1}
+                  </td>
+
+                  <td>
+                    <UserIdLink user={typeof p.userId === "object" ? p.userId : { _id: p.userId }} />
                   </td>
 
                   <td>

@@ -2,6 +2,7 @@ import React, { useEffect, useMemo, useState } from "react";
 import axios from "axios";
 import { API_ADMIN } from "../../../config/api";
 import { getAdminToken } from "../../../utils/adminAuth";
+import UserIdLink from "../Componets/UserIdLink";
 
 function authHeaders() {
   const token = getAdminToken();
@@ -111,6 +112,7 @@ export default function AdminUserControl({ mode = "roi" }) {
               <thead>
                 <tr>
                   <th>S.No</th>
+                  <th>ID</th>
                   <th>Name</th>
                   <th>Phone</th>
                   <th>Investment</th>
@@ -122,7 +124,7 @@ export default function AdminUserControl({ mode = "roi" }) {
               <tbody>
                 {filtered.length === 0 ? (
                   <tr>
-                    <td colSpan="7">No users found</td>
+                    <td colSpan="8">No users found</td>
                   </tr>
                 ) : (
                   filtered.map((user, index) => {
@@ -130,6 +132,7 @@ export default function AdminUserControl({ mode = "roi" }) {
                     return (
                       <tr key={user._id}>
                         <td>{index + 1}</td>
+                        <td><UserIdLink user={user} /></td>
                         <td>{user.name || "-"}</td>
                         <td>{user.phone || "-"}</td>
                         <td>{money(user.investmentAmount)}</td>
