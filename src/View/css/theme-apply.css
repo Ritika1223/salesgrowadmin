@@ -134,6 +134,20 @@ aside.sidebar {
   min-width: 0;
 }
 
+.team-selected-user {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 18px;
+  color: var(--color-ink);
+}
+
+.team-level-filter {
+  max-width: 240px;
+  margin-bottom: 18px;
+}
+
 .nav-count {
   min-width: 20px;
   height: 20px;

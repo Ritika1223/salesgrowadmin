@@ -16,6 +16,7 @@ import AdminWithdrawals from "./Pages/AdminWithdrawals";
 import AdminCoinWithdrawals from "./Pages/AdminCoinWithdrawals";
 import AdminRoiToRoiIncome from "./Pages/AdminRoiToRoiIncome";
 import AdminUserControl from "./Pages/AdminUserControl";
+import AdminTeam from "./Pages/AdminTeam";
 
 function AdminGuard({ children }) {
   if (!isAdminLoggedIn()) {
@@ -47,6 +48,8 @@ const Routes = [
       { index: true, element: <Navigate to="dashboard" replace /> },
       { path: "dashboard", element: <AdminDashboard /> },
       { path: "users", element: <Users /> },
+      { path: "upline", element: <AdminTeam mode="upline" /> },
+      { path: "downline", element: <AdminTeam mode="downline" /> },
       { path: "bankDetail", element: <BankDetailPage /> },
       { path: "add-fund", element: <Navigate to="/admin/payment-history" replace /> },
       { path: "fund/requests", element: <AdminFundRequests /> },

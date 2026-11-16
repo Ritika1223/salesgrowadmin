@@ -106,6 +106,16 @@ const NAV_LINKS = [
     label: "All Users",
   },
   {
+    to: "admin/upline",
+    icon: <i className="bi bi-diagram-3-fill"></i>,
+    label: "Upline",
+  },
+  {
+    to: "admin/downline",
+    icon: <i className="bi bi-diagram-2-fill"></i>,
+    label: "Downline",
+  },
+  {
     to: "admin/plan-requests",
     icon: <i className="bi bi-card-checklist"></i>,
     label: "Plan Requests",
