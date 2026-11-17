@@ -16,11 +16,11 @@ function authHeaders() {
 function statusClass(status) {
   switch (status) {
     case "pending":
-      return "pending";
+      return "Pending";
     case "approved":
-      return "approved";
+      return "Approved";
     case "rejected":
-      return "declined";
+      return "Declined";
     default:
       return "";
   }
@@ -143,9 +143,10 @@ export default function AdminFundRequests({ reportOnly = false }) {
                   <th>Amount</th>
                   <th>Transaction ID</th>
                   <th>Remark</th>
-                  <th>Status</th>
                   <th>Date</th>
                   {!reportOnly && <th>Action</th>}
+                  <th>Status</th>
+
                 </tr>
               </thead>
               <tbody>
@@ -168,11 +169,7 @@ export default function AdminFundRequests({ reportOnly = false }) {
                         <td>$ {Number(r.amount || 0).toLocaleString()}</td>
                         <td>{r.transactionId || "-"}</td>
                         <td>{r.remark || "-"}</td>
-                        <td>
-                          <span className={`status-badge ${statusClass(r.status)}`}>
-                            {r.status}
-                          </span>
-                        </td>
+                        
                         <td>{r.createdAt ? new Date(r.createdAt).toLocaleDateString("en-IN") : "-"}</td>
                         {!reportOnly && (
                           <td>
@@ -203,7 +200,13 @@ export default function AdminFundRequests({ reportOnly = false }) {
                               )}
                             </div>
                           </td>
+                          
                         )}
+                        <td>
+                          <span className={`status-badge ${statusClass(r.status)}`}>
+                            {r.status}
+                          </span>
+                        </td>
                       </tr>
                     );
                   })

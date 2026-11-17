@@ -455,6 +455,7 @@ export default function Users() {
                   <th>Referrals</th>
                   <th>Total Earning</th>
                   <th>Withdrawal</th>
+                  <th>Remaining Balance</th>
                   <th>Status</th>
                   <th>Join Date</th>
                   <th>Actions</th>
@@ -511,16 +512,30 @@ export default function Users() {
 
                     <td>
                       <span className="group-badge">
-                        {u.totalEarning || 0}
+                        {Number(u.totalEarning || 0).toLocaleString("en-US", {
+                          minimumFractionDigits: 3,
+                          maximumFractionDigits: 3,
+                        })}
                       </span>
                     </td>
 
                     <td>
                       <span className="coin-badge">
-                        {Number(u.totalWithdraw || 0).toLocaleString()}
+                        {Number(u.totalWithdraw || 0).toLocaleString("en-US", {
+                          minimumFractionDigits: 3,
+                          maximumFractionDigits: 3,
+                        })}
                       </span>
                     </td>
 
+                    <td>
+                      <span className="coin-badge">
+                        {Number(u.totalEarning - u.totalWithdraw || 0).toLocaleString("en-US", {
+                          minimumFractionDigits: 3,
+                          maximumFractionDigits: 3,
+                        })}
+                      </span>
+                    </td>
                     <td>
                       <span
                         className={

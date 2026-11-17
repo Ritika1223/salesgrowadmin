@@ -79,9 +79,10 @@ export default function AdminWithdrawals({ reportOnly = false }) {
                   <th>Amount</th>
                   <th>Payout</th>
                   <th>USDT Address(BEP20)</th>
-                  <th>Status</th>
                   <th>Date</th>
                   {!reportOnly && <th>Action</th>}
+                  <th>Status</th>
+
                 </tr>
               </thead>
               <tbody>
@@ -100,7 +101,6 @@ export default function AdminWithdrawals({ reportOnly = false }) {
                         <td>{row.amount}</td>
                         <td>{row.payout}</td>
                         <td>{row.upiId}</td>
-                        <td>{row.status}</td>
                         <td>{row.createdAt ? new Date(row.createdAt).toLocaleDateString("en-IN") : "-"}</td>
                         {!reportOnly && (
                           <td>
@@ -111,19 +111,20 @@ export default function AdminWithdrawals({ reportOnly = false }) {
                                   disabled={actionLoading === row._id + "approved"}
                                   onClick={() => updateStatus(row._id, "approved")}
                                 >
-                                  Approve
+                                  <i className="bi bi-check"></i>
                                 </button>
                                 <button
                                   className="decline-btn"
                                   disabled={actionLoading === row._id + "rejected"}
                                   onClick={() => updateStatus(row._id, "rejected")}
                                 >
-                                  Reject
-                                </button>
+<i className="bi bi-x"></i>                                </button>
                               </div>
                             )}
                           </td>
                         )}
+                                                <td>{row.status}</td>
+
                       </tr>
                     );
                   })

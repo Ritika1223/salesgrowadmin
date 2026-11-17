@@ -32,20 +32,11 @@ const NAV_LINKS = [
     label: "Bank Detail",
   },
   {
+    to: "admin/fund/requests",
+
     icon: <i className="bi bi-cash-coin"></i>,
-    label: "Fund",
-    children: [
-      {
-        to: "admin/fund/requests",
-        icon: <i className="bi bi-check2-square"></i>,
-        label: "Fund Requests",
-      },
-      {
-        to: "admin/fund/report",
-        icon: <i className="bi bi-file-earmark-text-fill"></i>,
-        label: "Fund Request Report",
-      },
-    ],
+    label: "Fund Requests",
+  
   },
 
   {
@@ -66,21 +57,11 @@ const NAV_LINKS = [
     label: "Coin Withdrawals",
   },
   {
+    to: "admin/withdraw/requests",
     icon: <i className="bi bi-cash-stack"></i>,
-    label: "Withdrawal",
+    label: "Withdrawal Requests",
     countKey: "withdrawal",
-    children: [
-      {
-        to: "admin/withdraw/requests",
-        icon: <i className="bi bi-check2-square"></i>,
-        label: "Withdrawal Requests",
-      },
-      {
-        to: "admin/withdraw/report",
-        icon: <i className="bi bi-file-earmark-text"></i>,
-        label: "Withdrawal Request Report",
-      },
-    ],
+   
   },
 
   // {
