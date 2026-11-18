@@ -4,6 +4,7 @@ import { API_ADMIN, API_BASE, getApiOrigin } from "../../../config/api";
 import { getAdminToken } from "../../../utils/adminAuth";
 import UserIdLink from "../Componets/UserIdLink";
 import { notifyAdminRequestsChanged } from "../../../utils/adminRequests";
+import { statusLabel } from "../../../utils/statusLabel";
 
 function authHeaders() {
   const t = getAdminToken();
@@ -223,7 +224,7 @@ export default function HostRequestsPage() {
                         </td>
                         <td>
                           <span className={`status-badge ${statusClass(r.status)}`}>
-                            {r.status}
+                            {statusLabel(r.status)}
                           </span>
                         </td>
                         <td>

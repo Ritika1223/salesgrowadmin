@@ -4,6 +4,8 @@ import { API_ADMIN } from "../../../config/api";
 import { getAdminToken } from "../../../utils/adminAuth";
 import { notifyAdminRequestsChanged } from "../../../utils/adminRequests";
 import UserIdLink from "../Componets/UserIdLink";
+import { downloadExcel } from "../../../utils/exportExcel";
+import { statusLabel } from "../../../utils/statusLabel";
 
 function authHeaders() {
   const t = getAdminToken();
@@ -27,6 +29,27 @@ export default function AdminWithdrawals({ reportOnly = false }) {
       setRows([]);
     }
     setLoading(false);
+  };
+
+  const exportRows = () => {
+    downloadExcel(
+      reportOnly ? "withdrawal-report.xls" : "withdrawal-requests.xls",
+      rows.map((row, index) => {
+        const user = row.userId || {};
+        return {
+          "S.No": index + 1,
+          ID: user.referralCode || "",
+          Name: user.name || "",
+          Phone: user.phone || "",
+          Amount: Number(row.amount || 0),
+          Payout: Number(row.payout || 0),
+          Deduction: Number(row.deduction || 0),
+          "USDT Address(BEP20)": row.upiId || "",
+          Status: statusLabel(row.status),
+          Date: row.createdAt ? new Date(row.createdAt).toLocaleString("en-IN") : "",
+        };
+      })
+    );
   };
 
   useEffect(() => {
@@ -64,6 +87,15 @@ export default function AdminWithdrawals({ reportOnly = false }) {
             <p>{reportOnly ? "All withdrawal requests" : "Approve or reject withdrawal requests"}</p>
           </div>
         </div>
+        <button
+          type="button"
+          className="dashboard-btn"
+          onClick={exportRows}
+          disabled={loading || rows.length === 0}
+        >
+          <i className="bi bi-file-earmark-excel me-2"></i>
+          Export to Excel
+        </button>
       </div>
       <div className="users-table-card">
         {loading ? (
@@ -123,7 +155,7 @@ export default function AdminWithdrawals({ reportOnly = false }) {
                             )}
                           </td>
                         )}
-                                                <td>{row.status}</td>
+                                                <td>{statusLabel(row.status)}</td>
 
                       </tr>
                     );

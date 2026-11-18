@@ -4,6 +4,7 @@ import { API_ADMIN } from "../../../config/api";
 import { getAdminToken } from "../../../utils/adminAuth";
 import { notifyAdminRequestsChanged } from "../../../utils/adminRequests";
 import UserIdLink from "../Componets/UserIdLink";
+import { statusLabel } from "../../../utils/statusLabel";
 
 function authHeaders() {
   const t = getAdminToken();
@@ -32,8 +33,10 @@ export default function AdminFundRequests({ reportOnly = false }) {
   const [actionLoading, setActionLoading] = useState(null);
   const [refreshFlag, setRefreshFlag] = useState(0);
   const [search, setSearch] = useState("");
+  const [statusFilter, setStatusFilter] = useState("all");
   const [currentPage, setCurrentPage] = useState(1);
-  const rowsPerPage = 10;
+  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const pageSizeOptions = [10, 20, 50, 100, 200, 500];
 
   useEffect(() => {
     const load = async () => {
@@ -82,7 +85,9 @@ export default function AdminFundRequests({ reportOnly = false }) {
       (item.remark || "").toLowerCase().includes(keyword) ||
       String(item.amount || "").includes(keyword)
     );
-  });
+  }).filter((item) => (
+    statusFilter === "all" ? true : String(item.status || "").toLowerCase() === statusFilter
+  ));
 
   const totalPages = Math.max(1, Math.ceil(filtered.length / rowsPerPage));
   const indexOfLast = currentPage * rowsPerPage;
@@ -125,6 +130,31 @@ export default function AdminFundRequests({ reportOnly = false }) {
             }}
           />
         </div>
+        <select
+          className="sort-select"
+          value={statusFilter}
+          onChange={(e) => {
+            setStatusFilter(e.target.value);
+            setCurrentPage(1);
+          }}
+        >
+          <option value="all">All Status</option>
+          <option value="pending">Pending</option>
+          <option value="approved">Approved</option>
+          <option value="rejected">Rejected</option>
+        </select>
+        <select
+          className="sort-select"
+          value={rowsPerPage}
+          onChange={(e) => {
+            setRowsPerPage(Number(e.target.value));
+            setCurrentPage(1);
+          }}
+        >
+          {pageSizeOptions.map((size) => (
+            <option key={size} value={size}>{size} / page</option>
+          ))}
+        </select>
       </div>
 
       <div className="users-table-card">
@@ -204,7 +234,7 @@ export default function AdminFundRequests({ reportOnly = false }) {
                         )}
                         <td>
                           <span className={`status-badge ${statusClass(r.status)}`}>
-                            {r.status}
+                            {statusLabel(r.status)}
                           </span>
                         </td>
                       </tr>

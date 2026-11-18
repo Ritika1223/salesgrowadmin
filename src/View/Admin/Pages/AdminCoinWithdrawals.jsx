@@ -3,6 +3,7 @@ import axios from "axios";
 import { API_ADMIN } from "../../../config/api";
 import { getAdminToken } from "../../../utils/adminAuth";
 import UserIdLink from "../Componets/UserIdLink";
+import { statusLabel } from "../../../utils/statusLabel";
 
 function authHeaders() {
   const t = getAdminToken();
@@ -97,7 +98,7 @@ export default function AdminCoinWithdrawals() {
                         <td>{user.nickname || user.name || "-"}</td>
                         <td>{Number(row.amount || 0).toLocaleString()}</td>
                         <td>{row.payoutAddress}</td>
-                        <td>{row.status}</td>
+                        <td>{statusLabel(row.status)}</td>
                         <td>{row.createdAt ? new Date(row.createdAt).toLocaleString("en-IN") : "-"}</td>
                         <td>
                           {row.status === "pending" && (

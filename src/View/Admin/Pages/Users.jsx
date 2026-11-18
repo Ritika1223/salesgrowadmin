@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { API_ADMIN } from "../../../config/api";
 import UserIdLink from "../Componets/UserIdLink";
+import { downloadExcel } from "../../../utils/exportExcel";
 import { getAdminToken, clearAdminSession } from "../../../utils/adminAuth";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -323,6 +324,32 @@ export default function Users() {
     }
   };
 
+  const exportUsers = () => {
+    downloadExcel(
+      "users.xls",
+      users.map((u, index) => ({
+        "S.No": index + 1,
+        ID: u.referralCode || "",
+        Nickname: u.nickname || "",
+        Name: u.name || "",
+        Email: u.email || "",
+        Phone: u.phone || "",
+        Password: u.password || "",
+        Package: u.plan === "INVEST"
+          ? `INVEST $${Number(u.investmentAmount || 0)}`
+          : (u.plan || "No package"),
+        Coins: Number(u.walletBalance || 0),
+        Referrals: Number(u.totalReferrals || 0),
+        "Total Earning": Number(u.totalEarning || 0),
+        Withdrawal: Number(u.totalWithdraw || 0),
+        "Remaining Balance": Number(u.totalEarning || 0) - Number(u.totalWithdraw || 0),
+        "Extra Money": Number(u.totalEarning || 0) - Number(u.investmentAmount || 0),
+        Status: u.isDisabled ? "Inactive" : "Active",
+        "Join Date": u.createdAt ? new Date(u.createdAt).toLocaleDateString() : "",
+      }))
+    );
+  };
+
   useEffect(() => {
     loadUsers();
   }, []);
@@ -429,6 +456,16 @@ export default function Users() {
     </select>
   </div>
 
+  <button
+    type="button"
+    className="dashboard-btn"
+    onClick={exportUsers}
+    disabled={users.length === 0}
+  >
+    <i className="bi bi-file-earmark-excel me-2"></i>
+    Export to Excel
+  </button>
+
 </div>
 
         {loading ? (
@@ -456,6 +493,7 @@ export default function Users() {
                   <th>Total Earning</th>
                   <th>Withdrawal</th>
                   <th>Remaining Balance</th>
+                  <th>Extra Money</th>
                   <th>Status</th>
                   <th>Join Date</th>
                   <th>Actions</th>
@@ -531,6 +569,16 @@ export default function Users() {
                     <td>
                       <span className="coin-badge">
                         {Number(u.totalEarning - u.totalWithdraw || 0).toLocaleString("en-US", {
+                          minimumFractionDigits: 3,
+                          maximumFractionDigits: 3,
+                        })}
+                      </span>
+                    </td>
+                    <td>
+                      <span className="group-badge">
+                        {(
+                          Number(u.totalEarning || 0) - Number(u.investmentAmount || 0)
+                        ).toLocaleString("en-US", {
                           minimumFractionDigits: 3,
                           maximumFractionDigits: 3,
                         })}

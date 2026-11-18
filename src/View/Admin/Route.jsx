@@ -17,6 +17,8 @@ import AdminCoinWithdrawals from "./Pages/AdminCoinWithdrawals";
 import AdminRoiToRoiIncome from "./Pages/AdminRoiToRoiIncome";
 import AdminUserControl from "./Pages/AdminUserControl";
 import AdminTeam from "./Pages/AdminTeam";
+import ProjectPdfs from "./Pages/ProjectPdfs";
+import IncomeAdjust from "./Pages/IncomeAdjust";
 
 function AdminGuard({ children }) {
   if (!isAdminLoggedIn()) {
@@ -48,6 +50,8 @@ const Routes = [
       { index: true, element: <Navigate to="dashboard" replace /> },
       { path: "dashboard", element: <AdminDashboard /> },
       { path: "users", element: <Users /> },
+      { path: "user-credit", element: <IncomeAdjust mode="credit" /> },
+      { path: "user-debit", element: <IncomeAdjust mode="debit" /> },
       { path: "upline", element: <AdminTeam mode="upline" /> },
       { path: "downline", element: <AdminTeam mode="downline" /> },
       { path: "bankDetail", element: <BankDetailPage /> },
@@ -64,7 +68,8 @@ const Routes = [
       { path: "payment-history", element: <PaymentHistoryPage /> },
       { path: "host-requests", element: <HostRequestsPage /> },
       { path: "groups", element: <Groups /> },
-      { path: "stickers", element: <Stickers /> }
+      { path: "stickers", element: <Stickers /> },
+      { path: "project-pdf", element: <ProjectPdfs /> }
     ]
   }
 ];

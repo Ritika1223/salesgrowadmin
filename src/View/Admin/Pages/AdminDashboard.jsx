@@ -54,6 +54,7 @@
         const [draft, setDraft] = useState(null);
         const [savingSettings, setSavingSettings] = useState(false);
         const [settingsMsg, setSettingsMsg] = useState("");
+        const [summary, setSummary] = useState(null);
 
         const loadAll = useCallback(async () => {
           setError("");
@@ -65,14 +66,15 @@
 
           setLoading({ users: true, groups: true, stickers: true });
 
-          const [uRes, gRes, sRes, iRes] = await Promise.all([
+          const [uRes, gRes, sRes, iRes, dRes] = await Promise.all([
             fetch(`${API_ADMIN}/users`, { headers }),
             fetch(`${API_ADMIN}/groups`, { headers }),
             fetch(`${API_ADMIN}/stickers`, { headers }),
-            fetch(`${API_ADMIN}/income-settings`, { headers })
+            fetch(`${API_ADMIN}/income-settings`, { headers }),
+            fetch(`${API_ADMIN}/dashboard-summary`, { headers })
           ]);
 
-          if (uRes.status === 401 || gRes.status === 401 || sRes.status === 401 || iRes.status === 401) {
+          if (uRes.status === 401 || gRes.status === 401 || sRes.status === 401 || iRes.status === 401 || dRes.status === 401) {
             clearAdminSession();
             navigate("/admin/login", { replace: true });
             return;
@@ -83,6 +85,7 @@
             const gJson = await gRes.json().catch(() => ({}));
             const sJson = await sRes.json().catch(() => ({}));
             const iJson = await iRes.json().catch(() => ({}));
+            const dJson = await dRes.json().catch(() => ({}));
 
             if (!uRes.ok) throw new Error(uJson.message || "Users request failed");
             if (!gRes.ok) throw new Error(gJson.message || "Groups request failed");
@@ -93,6 +96,7 @@
             setStickers(Array.isArray(sJson.stickers) ? sJson.stickers : []);
             if (iRes.ok && iJson.settings) setSettings(iJson.settings);
             else setSettings((current) => current || FALLBACK_SETTINGS);
+            if (dRes.ok) setSummary(dJson);
           } catch (e) {
             setError(e.message || "Failed to load dashboard");
           } finally {
@@ -200,6 +204,12 @@
           setSavingSettings(false);
         };
 
+        const money = (value) =>
+          `$${Number(value || 0).toLocaleString("en-US", {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+          })}`;
+
         const bandLabel = (row) => (
           row.from === row.to ? `Level ${row.from}` : `Level ${row.from}–${row.to}`
         );
@@ -263,6 +273,40 @@
         <div className="stats-card">
           <h6>Total Stickers</h6>
           <h2>{stickers.length}</h2>
+        </div>
+      </div>
+    </div>
+
+    <div className="row g-4 mb-4">
+      <div className="col-12 col-sm-6 col-xl">
+        <div className="stats-card">
+          <h6>Total Invest</h6>
+          <h2>{summary ? money(summary.totalInvest) : "…"}</h2>
+        </div>
+      </div>
+      <div className="col-12 col-sm-6 col-xl">
+        <div className="stats-card">
+          <h6>ROIs Gen.</h6>
+          <h2>{summary ? money(summary.totalRoi) : "…"}</h2>
+        </div>
+      </div>
+      <div className="col-12 col-sm-6 col-xl">
+        <div className="stats-card">
+          <h6>Total Withdrawals</h6>
+          <h2>{summary ? money(summary.totalWithdraw) : "…"}</h2>
+        </div>
+      </div>
+      <div className="col-12 col-sm-6 col-xl">
+        <div className="stats-card">
+          <h6>Pending Withdrawals</h6>
+          <h2>{summary ? money(summary.pendingWithdraw) : "…"}</h2>
+        </div>
+      </div>
+      <div className="col-12 col-sm-6 col-xl">
+        <div className="stats-card">
+          <h6>Balance Amount</h6>
+          <h2>{summary ? money(summary.balance) : "…"}</h2>
+          <p>Total invest − total withdrawal</p>
         </div>
       </div>
     </div>

@@ -17230,7 +17230,8 @@ button.stats-card{
     color:inherit;
 }
 
-button.stats-card p{
+button.stats-card p,
+.stats-card p{
     color:#94a3b8;
     margin:10px 0 0;
     font-size:13px;

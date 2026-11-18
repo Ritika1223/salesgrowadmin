@@ -87,6 +87,16 @@ const NAV_LINKS = [
     label: "All Users",
   },
   {
+    to: "admin/user-credit",
+    icon: <i className="bi bi-plus-circle-fill"></i>,
+    label: "User Credit",
+  },
+  {
+    to: "admin/user-debit",
+    icon: <i className="bi bi-dash-circle-fill"></i>,
+    label: "User Debit",
+  },
+  {
     to: "admin/upline",
     icon: <i className="bi bi-diagram-3-fill"></i>,
     label: "Upline",
@@ -120,6 +130,11 @@ const NAV_LINKS = [
     to: "admin/stickers",
     icon: <i className="bi bi-emoji-smile-fill"></i>,
     label: "Stickers",
+  },
+  {
+    to: "admin/project-pdf",
+    icon: <i className="bi bi-file-earmark-pdf-fill"></i>,
+    label: "Project PDF",
   },
 
   {

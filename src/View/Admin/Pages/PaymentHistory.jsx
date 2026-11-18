@@ -4,6 +4,7 @@ import { API_ADMIN, API_BASE, getApiOrigin } from "../../../config/api";
 import { getAdminToken } from "../../../utils/adminAuth";
 import { notifyAdminRequestsChanged } from "../../../utils/adminRequests";
 import UserIdLink from "../Componets/UserIdLink";
+import { statusLabel } from "../../../utils/statusLabel";
 
 function authHeaders() {
   const t = getAdminToken();
@@ -421,7 +422,7 @@ function statusClass(status) {
                         p.status
                       )}`}
                     >
-                      {p.status}
+                      {statusLabel(p.status)}
                     </span>
 
                     {p.coinsAdded > 0 && (
